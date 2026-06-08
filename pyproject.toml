@@ -1,0 +1,23 @@
+[project]
+name = "spext"
+version = "0.1.0"
+description = "Plataforma acadêmica de visão computacional e tokenização de imagens"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["spext"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
