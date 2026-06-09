@@ -49,7 +49,7 @@ export default async function ModelosPage() {
     .order('dominio', { ascending: true })
     .order('created_at', { ascending: false })
 
-  if (error) console.error('[modelos] supabase error:', JSON.stringify(error))
+  if (error) console.error('[modelos]', error.code, error.message, error.details)
 
   const modelos = (data ?? []) as Modelo[]
 
