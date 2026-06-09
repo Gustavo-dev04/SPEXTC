@@ -36,7 +36,13 @@ def test_default_registry_tem_tres_dominios():
 def test_baja_eh_deteccao_nuvem():
     assert BAJA.pipeline is PipelineKind.DETECCAO
     assert BAJA.runtime is Runtime.NUVEM_BATCH
-    assert BAJA.model_ref.nome == "yolov8n"
+    # Modelo real: Saga v0 (YOLOv8n fine-tuned, mAP50=0.989)
+    assert BAJA.model_ref.nome == "saga"
+    assert BAJA.model_ref.versao == "v0"
+    # 4 classes com treino na v0
+    assert set(BAJA.vocabulario) == {
+        "casca_de_laranja", "escorrimento", "bolha", "water_spotting"
+    }
 
 
 def test_soja_eh_segmentacao_classificacao():
