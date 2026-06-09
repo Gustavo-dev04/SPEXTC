@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { supabase } from '@/lib/supabase'
 import type { Melhoria } from '@/lib/types'
 import DomainCard from '@/components/DomainCard'
