@@ -163,7 +163,7 @@ export default async function HomePage() {
                 <div className="flex items-center gap-3 mb-5">
                   <div className="w-1.5 h-1.5 rounded-full bg-white/40" />
                   <span className="text-[11px] text-white/25 tracking-[0.25em] uppercase font-medium">
-                    Generalista · v0 · Em produção
+                    Generalista · v1 · Em produção
                   </span>
                 </div>
 
@@ -171,21 +171,21 @@ export default async function HomePage() {
                   Magnus
                 </h3>
                 <p className="text-white/20 text-sm mb-6 tracking-wide">
-                  Inspeção de superfícies · pintura · defeitos · chassi
+                  Inspeção de superfícies · 8 classes · YOLO11s
                 </p>
 
                 <p className="text-white/45 leading-relaxed max-w-lg text-[15px]">
-                  Detecção de defeitos de pintura, superfícies e anomalias em inspeções
-                  médias e grandes. Alta precisão e velocidade — o modelo de produção
-                  para uso diário.
+                  Fine-tune multi-fonte com YOLO11s — triplicou parâmetros (3M→9,4M) e dobrou
+                  o dataset (3 fontes curadas de 13 auditadas). 5 classes prontas para produção,
+                  3 com causas identificadas e endereçáveis no próximo ciclo.
                 </p>
 
                 <div className="mt-7 flex flex-wrap gap-2">
                   {[
-                    'Defeitos de pintura',
-                    'Bounding boxes',
-                    'Inspeção de chassi',
-                    'Alta velocidade',
+                    'casca de laranja',
+                    'water spotting',
+                    'escorrimento · bolha · sujeira',
+                    'Bounding boxes · 24 ms',
                   ].map((cap) => (
                     <span
                       key={cap}
@@ -201,18 +201,21 @@ export default async function HomePage() {
               <div className="lg:w-64 flex-shrink-0 space-y-3">
                 <div className="grid grid-cols-2 gap-2">
                   <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-4">
-                    <p className="text-white/20 text-[11px] mb-1.5">mAP50</p>
-                    <p className="text-white/80 text-2xl font-bold">98.9%</p>
+                    <p className="text-white/20 text-[11px] mb-1.5">mAP50 core</p>
+                    <p className="text-white/80 text-2xl font-bold">89.1%</p>
+                    <p className="text-white/20 text-[10px] mt-0.5">agregado 65.5%</p>
                   </div>
                   <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-4">
                     <p className="text-white/20 text-[11px] mb-1.5">Classes</p>
-                    <p className="text-white/80 text-2xl font-bold">4</p>
+                    <p className="text-white/80 text-2xl font-bold">8</p>
+                    <p className="text-white/20 text-[10px] mt-0.5">5 em produção</p>
                   </div>
                 </div>
 
                 <div className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-4">
                   <p className="text-white/20 text-[11px] mb-1.5">Pipeline</p>
-                  <p className="text-white/60 text-sm font-mono">YOLOv8n fine-tuned</p>
+                  <p className="text-white/60 text-sm font-mono">YOLO11s fine-tuned</p>
+                  <p className="text-white/20 text-[10px] mt-0.5 font-mono">24.1 ms · 9.4M params</p>
                 </div>
 
                 <Link

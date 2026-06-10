@@ -369,10 +369,12 @@ export default function InspecionarPage() {
             </h2>
             {domain === 'baja' ? (
               <dl className="space-y-2">
-                <Row label="Tipo" value="Generalista" />
-                <Row label="Pipeline" value="YOLOv8n fine-tuned" mono />
-                <Row label="mAP50" value="98.9%" />
-                <Row label="Classes" value="4" />
+                <Row label="Tipo" value="Generalista · v1" />
+                <Row label="Pipeline" value="YOLO11s fine-tuned" mono />
+                <Row label="mAP50 core" value="89.1%" />
+                <Row label="mAP50 agregado" value="65.5%" />
+                <Row label="Classes" value="8 (5 em prod.)" />
+                <Row label="Inference" value="24.1 ms" />
               </dl>
             ) : (
               <dl className="space-y-2">
