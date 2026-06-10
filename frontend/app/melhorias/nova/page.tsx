@@ -8,15 +8,15 @@ import { ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
 
 const DOMINIOS: { value: Dominio; label: string }[] = [
-  { value: 'baja', label: 'Baja' },
-  { value: 'soja', label: 'Soja' },
+  { value: 'soja', label: 'Saga — Inspeção granular' },
+  { value: 'baja', label: 'Magnus — Inspeção de superfícies' },
 ]
 
 const TIPOS: { value: MelhoriaTipo; label: string }[] = [
-  { value: 'treino_inicial', label: '🧠 Treino inicial' },
-  { value: 'fine_tuning', label: '🔧 Fine-tuning' },
-  { value: 'fine_tuning_validacao', label: '🔬 Fine-tuning + validação' },
-  { value: 'dataset', label: '📦 Dataset' },
+  { value: 'treino_inicial', label: 'Treino inicial' },
+  { value: 'fine_tuning', label: 'Fine-tuning' },
+  { value: 'fine_tuning_validacao', label: 'Fine-tuning + validação' },
+  { value: 'dataset', label: 'Dataset' },
 ]
 
 interface FormState {
@@ -32,7 +32,7 @@ interface FormState {
 }
 
 const INITIAL: FormState = {
-  dominio: 'baja',
+  dominio: 'soja',
   tipo: 'treino_inicial',
   descricao: '',
   modelo_antes: '',
@@ -42,6 +42,11 @@ const INITIAL: FormState = {
   valor_depois: '',
   notas: '',
 }
+
+const inputClass =
+  'bg-white/[0.03] border border-white/[0.1] rounded-xl px-3 py-2.5 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-white/30 focus:bg-white/[0.05] transition-colors'
+
+const labelClass = 'block text-[12px] font-medium text-white/40 mb-1.5 tracking-wide'
 
 export default function NovaMelhoriaPage() {
   const router = useRouter()
@@ -87,59 +92,60 @@ export default function NovaMelhoriaPage() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto space-y-6">
-      <div className="flex items-center gap-3">
+    <div className="max-w-2xl mx-auto px-6 md:px-10 py-12 space-y-8">
+      <div className="flex items-start gap-4">
         <Link
           href="/melhorias"
-          className="text-slate-400 hover:text-slate-600 transition-colors"
+          className="text-white/20 hover:text-white/50 transition-colors mt-1.5"
           aria-label="Voltar"
         >
-          <ArrowLeft size={20} />
+          <ArrowLeft size={18} />
         </Link>
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Nova Melhoria</h1>
-          <p className="text-slate-500 mt-1">Registre uma evolução no modelo ou dataset</p>
+          <p className="text-[11px] text-white/25 tracking-[0.35em] uppercase mb-2">Log</p>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Nova Melhoria</h1>
+          <p className="text-white/30 mt-1 text-sm">Registre uma evolução no modelo ou dataset</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 p-6 space-y-5">
+      <form onSubmit={handleSubmit} className="bg-[#080808] border border-white/[0.07] rounded-2xl p-7 space-y-5">
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="dominio">
-              Domínio
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="dominio">Modelo</label>
             <select
               id="dominio"
               value={form.dominio}
               onChange={(e) => set('dominio', e.target.value as Dominio)}
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+              className={inputClass + ' w-full appearance-none cursor-pointer'}
             >
               {DOMINIOS.map((d) => (
-                <option key={d.value} value={d.value}>{d.label}</option>
+                <option key={d.value} value={d.value} className="bg-[#111] text-white">
+                  {d.label}
+                </option>
               ))}
             </select>
           </div>
 
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="tipo">
-              Tipo
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="tipo">Tipo</label>
             <select
               id="tipo"
               value={form.tipo}
               onChange={(e) => set('tipo', e.target.value as MelhoriaTipo)}
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 bg-white focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand"
+              className={inputClass + ' w-full appearance-none cursor-pointer'}
             >
               {TIPOS.map((t) => (
-                <option key={t.value} value={t.value}>{t.label}</option>
+                <option key={t.value} value={t.value} className="bg-[#111] text-white">
+                  {t.label}
+                </option>
               ))}
             </select>
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-slate-700" htmlFor="descricao">
-            Descrição <span className="text-red-500">*</span>
+        <div>
+          <label className={labelClass} htmlFor="descricao">
+            Descrição <span className="text-red-400/70">*</span>
           </label>
           <input
             id="descricao"
@@ -147,102 +153,87 @@ export default function NovaMelhoriaPage() {
             value={form.descricao}
             onChange={(e) => set('descricao', e.target.value)}
             placeholder="Ex: Fine-tuning com 200 novas amostras de escorrimento"
-            className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+            className={inputClass + ' w-full'}
           />
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="modelo_antes">
-              Modelo antes
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="modelo_antes">Modelo antes</label>
             <input
               id="modelo_antes"
               type="text"
               value={form.modelo_antes}
               onChange={(e) => set('modelo_antes', e.target.value)}
-              placeholder="Ex: yolov8n_v0"
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+              placeholder="Ex: saga@v0"
+              className={inputClass + ' w-full'}
             />
           </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="modelo_depois">
-              Modelo depois
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="modelo_depois">Modelo depois</label>
             <input
               id="modelo_depois"
               type="text"
               value={form.modelo_depois}
               onChange={(e) => set('modelo_depois', e.target.value)}
-              placeholder="Ex: yolov8n_v1"
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+              placeholder="Ex: saga@v1"
+              className={inputClass + ' w-full'}
             />
           </div>
         </div>
 
         <div className="grid grid-cols-3 gap-4">
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="metrica_chave">
-              Métrica
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="metrica_chave">Métrica</label>
             <input
               id="metrica_chave"
               type="text"
               value={form.metrica_chave}
               onChange={(e) => set('metrica_chave', e.target.value)}
               placeholder="Ex: mAP50"
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+              className={inputClass + ' w-full'}
             />
           </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="valor_antes">
-              Valor antes
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="valor_antes">Antes</label>
             <input
               id="valor_antes"
               type="number"
               step="any"
               value={form.valor_antes}
               onChange={(e) => set('valor_antes', e.target.value)}
-              placeholder="Ex: 0.82"
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+              placeholder="0.82"
+              className={inputClass + ' w-full'}
             />
           </div>
-
-          <div className="flex flex-col gap-1.5">
-            <label className="text-sm font-medium text-slate-700" htmlFor="valor_depois">
-              Valor depois
-            </label>
+          <div>
+            <label className={labelClass} htmlFor="valor_depois">Depois</label>
             <input
               id="valor_depois"
               type="number"
               step="any"
               value={form.valor_depois}
               onChange={(e) => set('valor_depois', e.target.value)}
-              placeholder="Ex: 0.989"
-              className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+              placeholder="0.989"
+              className={inputClass + ' w-full'}
             />
           </div>
         </div>
 
-        <div className="flex flex-col gap-1.5">
-          <label className="text-sm font-medium text-slate-700" htmlFor="notas">
-            Notas
-          </label>
+        <div>
+          <label className={labelClass} htmlFor="notas">Notas</label>
           <textarea
             id="notas"
             value={form.notas}
             onChange={(e) => set('notas', e.target.value)}
             placeholder="Observações adicionais, contexto, problemas encontrados…"
             rows={3}
-            className="border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-800 resize-none focus:outline-none focus:ring-2 focus:ring-brand/30 focus:border-brand placeholder:text-slate-300"
+            className={inputClass + ' w-full resize-none'}
           />
         </div>
 
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-xl px-4 py-3 text-sm text-red-700">
+          <div className="bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-3 text-sm text-red-400">
             {error}
           </div>
         )}
@@ -250,14 +241,14 @@ export default function NovaMelhoriaPage() {
         <div className="flex justify-end gap-3 pt-1">
           <Link
             href="/melhorias"
-            className="px-4 py-2.5 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+            className="px-4 py-2.5 text-sm text-white/30 hover:text-white/60 transition-colors"
           >
             Cancelar
           </Link>
           <button
             type="submit"
             disabled={saving}
-            className="px-5 py-2.5 bg-brand text-white text-sm font-medium rounded-xl hover:bg-brand/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-5 py-2.5 bg-white text-black text-sm font-semibold rounded-xl hover:bg-white/90 active:scale-[0.98] transition-all disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {saving ? 'Salvando…' : 'Salvar melhoria'}
           </button>

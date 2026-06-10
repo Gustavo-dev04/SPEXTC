@@ -9,11 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          DEFAULT: '#4f8ef7',
-          dark: '#1a1a2e',
-          light: '#f0f4ff',
-        },
+        brand: '#ffffff',
       },
     },
   },
